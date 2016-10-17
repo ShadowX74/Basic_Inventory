@@ -206,20 +206,31 @@ public class Inventory {
                 System.out.println("Your bag is empty.");
                 whatDo(currentItem);
             }
-        } else if (action.equals("d")) {
-            /*Uses last picked up*/
-            System.out.println("You used a " + inventory.get(inventory.size() - 1).getName() + ".");
-            //Prints out action for item
-            System.out.println(inventory.get(inventory.size() - 1).getAction());
+		} else if (action.equals("d")) {
+			if (!inventory.isEmpty()) {
+				/* Uses last picked up */
+				System.out.println("You used a " + inventory.get(inventory.size() - 1).getName() + ".");
+				// Prints out action for item
+				System.out.println(inventory.get(inventory.size() - 1).getAction());
 
-            /*If the item has the kills property, the player dies*/
-            if (inventory.get(inventory.size() - 1).getKills() == true) {
-                playerAlive = false;
-            }
-            
-            /*Removes item from inventory*/
-            playerWeight -= inventory.get(inventory.size() - 1).getWeight();
-            inventory.remove(inventory.size() - 1);
+				/* If the item has the kills property, the player dies */
+				if (inventory.get(inventory.size() - 1).getKills() == true) {
+					playerAlive = false;
+				}
+
+				if (!inventory.get(inventory.size() - 1).getName().equals("Anvil") && 
+						!inventory.get(inventory.size() - 1).getName().equals("Gilded Sword") && 
+						!inventory.get(inventory.size() - 1).getName().equals("Magical Mirror") && 
+						!inventory.get(inventory.size() - 1).getName().equals("Bow") &&
+						!inventory.get(inventory.size() - 1).getName().equals("Phone")) { //If item is reusable
+					/* Removes item from inventory */
+					playerWeight -= inventory.get(inventory.size() - 1).getWeight();
+					inventory.remove(inventory.size() - 1);
+				}
+			} else {
+				System.out.println("There is nothing in your bag to use.");
+				whatDo(currentItem);
+			}
         } else if (action.equals("e")) {
             //Suicide option
             System.out.println("You deaded yourself");
